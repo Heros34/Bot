@@ -1,14 +1,16 @@
 from flask import Flask, request
 import requests
+from dotenv import load_dotenv
 import os
 
+load_dotenv()
 app = Flask(__name__)
 
-# Токен доступа и верификация
-ACCESS_TOKEN = "IGQWRPZAmR4U2JlUkVRdmZA3UHhSMWRhMUJ4TTY2OWhSeElfUkExbHJpbU8zT0p0RHgxRGYydWVuZAVNxR3J3NTF3MFJGZAy1yVjlmZAF9laVZAYLUJZAVlo0XzBJdWFyNzF1eFh6TXJHc281UTJEYTBaQzR6TUhTRGJBTGsZD"
+
+ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 VERIFY_TOKEN = "trahal_anal_mamonta"
 
-# Функция для отправки сообщений
+
 def send_message(recipient_id, message_text):
     url = f"https://graph.facebook.com/v17.0/me/messages?access_token={ACCESS_TOKEN}"
     headers = {"Content-Type": "application/json"}
@@ -20,7 +22,7 @@ def send_message(recipient_id, message_text):
     if response.status_code != 200:
         print(f"Ошибка отправки сообщения: {response.json()}")
 
-# Обработка вебхуков
+
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
     if request.method == 'GET':
